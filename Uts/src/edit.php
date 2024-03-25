@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Customer</title>
+    <link rel="stylesheet" href="css/home.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container">
+<body style="background-color: var(--1) ; color: var(--4); ">
+    <?php showNavbarBasedOnRole(); ?>
+    <div class="container" style="margin-top: 85px ; ">
         <h1 class="my-4">Edit Customer</h1>
         <?php
         require 'koneksi.php';
@@ -43,6 +45,24 @@
                 echo '<div class="alert alert-danger" role="alert">Error updating customer.</div>';
             }
         }
+
+
+        function showNavbarBasedOnRole()
+        {
+            if (isset ($_SESSION['arole'])) {
+                $role = $_SESSION['arole'];
+                if ($role == 'user') {
+                    include 'Nav/NavAdmin.php';
+                } elseif ($role == 'user') {
+                    include 'Nav/NavAdmin.php';
+                } else {
+                    include 'Nav/NavAdmin.php';
+                }
+            } else {
+                include 'Nav/NavAdmin.php';
+            }
+        }
+
         ?>
 
         <form method="POST">
