@@ -17,25 +17,17 @@ if (isset ($_POST['submit'])) {
     $password = md5($_POST['password']);
     $gender = $_POST['gender'];
     $birthdate = $_POST['birthdate'];
-
-    // Dapatkan nama file yang diunggah
-    $fileName = $_FILES['fileToUpload']['name'];
-    $fileTemp = $_FILES['fileToUpload']['tmp_name'];
-
-    // Simpan file di direktori yang diinginkan
-    $uploadDir = "uploads/";
-    $filePath = $uploadDir . $fileName;
-    move_uploaded_file($fileTemp, $filePath);
-
-    // Persiapkan statement SQL untuk mencegah SQL Injection
-    $sql = "INSERT INTO users (FullName, Username, Email, Password, Gender, Birthdate, RegistrationDate, BuktiPembayaran) 
-            VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)";
+    $role = 'customer';
+    $companyName = $_POST['companyName'];
+    $phoneNumber = $_POST['phoneNumber'];
+    $sql = "INSERT INTO user (FullName, Username, Email, Password, Gender, Birthdate, RegistrationDate, Role, CompanyName, PhoneNumber) 
+            VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)";
 
     // Persiapkan statement
     $stmt = mysqli_prepare($conn, $sql);
 
     // Bind parameter ke statement
-    mysqli_stmt_bind_param($stmt, "sssssss", $fullName, $username, $email, $password, $gender, $birthdate, $fileName);
+    mysqli_stmt_bind_param($stmt, "sssssssss", $fullName, $username, $email, $password, $gender, $birthdate, $role, $companyName, $phoneNumber);
 
     // Eksekusi statement
     if (mysqli_stmt_execute($stmt)) {

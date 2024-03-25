@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Add customer</title>
 
     <!-- All CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -36,26 +36,11 @@
 
 
 
-    function getTotalSimpanan($conn, $idUser, $jenisSimpanan)
-    {
-        $sql = "SELECT total_$jenisSimpanan FROM total_tabungan WHERE ID_User = '$idUser'";
-        $result = mysqli_query($conn, $sql);
 
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            return $row["total_$jenisSimpanan"];
-        } else {
-            return 0.00;
-        }
-    }
 
-    // Periksa role pengguna dan arahkan sesuai ke halaman yang sesuai
-    if (!isset ($_SESSION['arole']) || ($_SESSION['arole'] !== 'user' && $_SESSION['arole'] !== 'admin')) {
-        header("Location: home.php");
-        exit();
-    }
 
-    if ($_SESSION['arole'] === 'admin' && isset ($_SESSION['alogin'])) {
+
+    if ($_SESSION['arole'] === 'user' && isset ($_SESSION['alogin'])) {
         $userID = $_SESSION['alogin'];
     } else {
         $userID = $_SESSION['ulogin'];
@@ -66,7 +51,7 @@
     {
         if (isset ($_SESSION['arole'])) {
             $role = $_SESSION['arole'];
-            if ($role == 'admin') {
+            if ($role == 'user') {
                 include 'Nav/NavAdmin.php';
             } elseif ($role == 'user') {
                 include 'Nav/NavUser.php';
@@ -77,111 +62,37 @@
             include 'Nav/NavUser.php';
         }
     }
+
+
     ?>
 
 
 
     <?php showNavbarBasedOnRole(); ?>
-
-
-
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="img/pexels-andrea-piacquadio-840996.jpg " class="d-block w-100 object-fit-cover " alt="...">
-                <div class="carousel-caption  ">
-                    <h5 style=" color: var(--4); ">APAKAH KAMU <br> INGIN MENABUNG</h5>
-                    <p class>Koperasi kami menawarkan beragam produk dan layanan tabungan</p>
-                    <p><a href="pembayaran.php" class="btn   mt-3"
-                            style=" border: 1px solid var(--3); color: var(--3); background-color: var(--4) ;">Learn
-                            More</a>
-                    </p>
-                </div>
+    <div class="container" style="margin-top: 95px; margin-bottom: 95px; ">
+        <h1 class="my-4">Add Customer</h1>
+        <form action="add_customer.php" method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
-            <div class="carousel-item">
-                <img src="img/pexels-cowomen-2041627.jpg" class="d-block w-100 object-fit-cover " alt="...">
-                <div class="carousel-caption">
-                    <h5>INGIN TRANSFER <br> TANPA BIAYA ADMIN</h5>
-                    <p>Nikmati kemudahan transfer tanpa biaya admin di koperasi kami</p>
-                    <p><a href="pembayaran.php" class="btn   mt-3"
-                            style=" border: 1px solid var(--3); color: var(--3); background-color: var(--4) ;">Learn
-                            More</a>
-                    </p>
-                </div>
+            <div class="mb-3">
+                <label for="companyName" class="form-label">Company Name</label>
+                <input type="text" class="form-control" id="companyName" name="companyName" required>
             </div>
-
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 
 
-
-    <section class="services section-padding" id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-header text-center pb-5">
-                        <h2 class="text-start mb-5">Informasi Simpanan</h2>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-4">
-                    <div class="card text-center pb-2" style="background-color:var(--2) ; color:var(--4) ; ">
-                        <div class="card-body">
-                            <i class="bi bi-wallet2"></i>
-                            <h3 class="card-title">Wajib</h3>
-                            <hr>
-                            <p class="lead">Rp
-                                <?php echo number_format(getTotalSimpanan($conn, $userID, 'wajib'), 2); ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-12 col-lg-4">
-                    <div class="card text-center pb-2" style="background-color:var(--2) ; color:var(--4) ; ">
-                        <div class="card-body">
-                            <i class="bi bi-cash-coin"></i>
-                            <h3 class="card-title">Pokok</h3>
-                            <hr>
-                            <p class="lead">Rp
-                                <?php echo number_format(getTotalSimpanan($conn, $userID, 'pokok'), 2); ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-12 col-lg-4">
-                    <div class="card text-center pb-2" style="background-color:var(--2) ; color:var(--4) ;  ">
-                        <div class="card-body">
-                            <i class="bi bi-wallet"></i>
-                            <h3 class="card-title">Sukarela</h3>
-                            <hr>
-                            <p class="lead">Rp
-                                <?php echo number_format(getTotalSimpanan($conn, $userID, 'sukarela'), 2); ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 
 
@@ -203,7 +114,7 @@
                         <hr class="mb-4 mt-0 d-inline-block mx-auto"
                             style="width: 60px; background-color: #7c4dff; height: 2px" />
                         <p>
-                            Koperasi kami berkomitmen memberikan kualitas terbaik.
+                            Atur kontak anda sesuai kebutuhan anda
                         </p>
                     </div>
 

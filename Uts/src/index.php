@@ -33,26 +33,22 @@
                     <input id="input" type="password" name="password" placeholder="Password *" required />
                     <input id="input" type="password" name="confirmPassword" placeholder="Confirm Password *"
                         required />
-                    <select id="input" name="gender" class="form-select" aria-label="Default select example">
-                        <option selected>Gender</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                        <option value="3">Emaile</option>
-                        <option value="4">Mechanic</option>
-                        <option value="5">Croissant</option>
+                    <select id="input" name="gender" class="form-select" aria-label="Gender" required>
+                        <option selected disabled>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                     </select>
                     <input id="input" type="date" name="birthdate" required />
-                    <p style="color: var(--4) ">Bukti Pembayaran</p>
-                    <input id="input" type="file" name="fileToUpload" id="fileToUpload" placeholder="Bukti Pembayaran"
-                        required />
+                    <input id="input" type="text" name="companyName" placeholder="Company Name" required />
+                    <input id="input" type="tel" name="phoneNumber" placeholder="Phone Number" required />
                     <p style="color: var(--4) ">CAPTCHA</p>
                     <img src="captcha.php" alt="CAPTCHA"><br><br>
                     <input id="input" type="text" name="captcha" placeholder="Enter CAPTCHA" required />
-
                     <button type="submit" name="submit">Register</button>
                     <p class="message">Already registered? <a href="loginpage.php">Sign In</a></p>
                 </div>
             </form>
+
 
         </div>
     </div>
